@@ -78,120 +78,89 @@ export interface IUserMethods {
    * @returns {String} - The plaintext reset token
    */
   createResetPasswordToken(): string;
-  // byEmailAddress(email: string): mongoose.Query<IUser[], IUser>;
 }
 
-// export interface UserQueryHelpers {
-//   byEmailAddress(
-//     email: string,
-//   ): QueryWithHelpers<
-//     HydratedDocument<IUser>[],
-//     HydratedDocument<IUser>,
-//     UserQueryHelpers
-//   >;
-// }
-
-export const UserSchema = new mongoose.Schema<
-  IUser,
-  UserModel,
-  IUserMethods
-  // UserQueryHelpers
->(
-  {
-    firstName: {
-      type: String,
-      required: [true, 'Please tell us your first name!'],
-    },
-    lastName: {
-      type: String,
-      required: [true, 'Please tell us your last name!'],
-    },
-    email: {
-      type: String,
-      unique: true,
-    },
-    picture: {
-      type: String,
-      default:
-        'http://images.fineartamerica.com/images-medium-large/alien-face-.jpg',
-    },
-    role: {
-      type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
-    },
-    active: {
-      type: Boolean,
-      default: true,
-    },
-    blocked: {
-      type: Boolean,
-      default: false,
-      select: false,
-    },
-    addressBook: [
-      {
-        name: {
-          type: String,
-          required: [true, 'Please provide a name for this address'],
-        },
-        address: {
-          type: String,
-          required: [true, 'Please provide an address'],
-        },
-        email: {
-          type: String,
-          required: [true, 'Please provide an email address'],
-        },
-        phone: {
-          type: String,
-          required: [true, 'Please provide a phone number'],
-        },
-        postalCode: {
-          type: String,
-          required: [true, 'Please provide a postal code'],
-        },
+export const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
+  firstName: {
+    type: String,
+    required: [true, 'Please tell us your first name!'],
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Please tell us your last name!'],
+  },
+  email: {
+    type: String,
+    unique: true,
+  },
+  picture: {
+    type: String,
+    default:
+      'http://images.fineartamerica.com/images-medium-large/alien-face-.jpg',
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+  },
+  active: {
+    type: Boolean,
+    default: true,
+  },
+  blocked: {
+    type: Boolean,
+    default: false,
+    select: false,
+  },
+  addressBook: [
+    {
+      name: {
+        type: String,
+        required: [true, 'Please provide a name for this address'],
       },
-    ],
-    password: {
-      type: String,
-      required: [true, 'Please provide a password'],
-      minlength: 8,
-    },
-    passwordConfirm: {
-      type: String,
-      required: [true, 'Please confirm your password'],
-      validate: {
-        validator: function (pwdConfirm: string) {
-          return pwdConfirm === this.password;
-        },
+      address: {
+        type: String,
+        required: [true, 'Please provide an address'],
+      },
+      email: {
+        type: String,
+        required: [true, 'Please provide an email address'],
+      },
+      phone: {
+        type: String,
+        required: [true, 'Please provide a phone number'],
+      },
+      postalCode: {
+        type: String,
+        required: [true, 'Please provide a postal code'],
       },
     },
-    passwordChangedAt: {
-      type: Number,
-      default: Date.now(),
-    },
-    passwordResetToken: {
-      type: String,
-    },
-    passwordResetTokenExpires: {
-      type: Number,
+  ],
+  password: {
+    type: String,
+    required: [true, 'Please provide a password'],
+    minlength: 8,
+  },
+  passwordConfirm: {
+    type: String,
+    required: [true, 'Please confirm your password'],
+    validate: {
+      validator: function (pwdConfirm: string) {
+        return pwdConfirm === this.password;
+      },
     },
   },
-  {
-    // query: {
-    //   byEmailAddress(email: string) {
-    //     return this.find({
-    //       $or: [{ email }, { 'addressBook.email': email }],
-    //     });
-    //   },
-    // },
+  passwordChangedAt: {
+    type: Number,
+    default: Date.now(),
   },
-);
-
-/* Middlewares */
-
-// DOCUMENT MIDDLEWARE
+  passwordResetToken: {
+    type: String,
+  },
+  passwordResetTokenExpires: {
+    type: Number,
+  },
+});
 
 /**
  * Hashes the password before save()
@@ -210,7 +179,6 @@ UserSchema.pre('save', async function (next) {
  * @pre ('save') middleware function that catches the time of when the password was changed
  */
 UserSchema.pre('save', async function (next) {
-  // only update the passwordChangedAt field if the password is being modified
   if (!this.isModified('password')) return next();
   this.passwordChangedAt = Date.now();
   next();
@@ -218,15 +186,8 @@ UserSchema.pre('save', async function (next) {
 
 UserSchema.pre(/^find/, function (next) {
   this.find({ blocked: { $ne: false } });
-  // this.select('-password');
   next();
 });
-
-// UserSchema.query.findByEmailAddress = async function (email: string) {
-//   return this.find({
-//     $or: [{ email }, { 'addressBook.email': email }],
-//   });
-// };
 
 // INSTANCE METHODS DEFINITION
 
@@ -249,7 +210,6 @@ UserSchema.method(
   function createResetPasswordToken() {
     const resetToken = crypto.randomBytes(32).toString('hex');
 
-    // hash the token for added security and save it to the user's document
     this.passwordResetToken = crypto
       .createHash('sha256')
       .update(resetToken)

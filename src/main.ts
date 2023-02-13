@@ -3,8 +3,6 @@ import { NestFactory } from '@nestjs/core';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
-// import cookieParser = require('cookie-parser');
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -13,7 +11,6 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  // enable URI versioning
   app.enableVersioning({
     type: VersioningType.URI,
   });

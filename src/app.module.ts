@@ -9,8 +9,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './common/db/mongo.service';
 import { EmailService } from './providers/email/email.service';
 import { EmailModule } from './providers/email/email.module';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './common/guards';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -33,13 +31,6 @@ const envFilePath: string = path.resolve(
     EmailModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    EmailService,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: RolesGuard,
-    // },
-  ],
+  providers: [AppService, EmailService],
 })
 export class AppModule {}

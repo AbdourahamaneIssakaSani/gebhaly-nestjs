@@ -12,14 +12,8 @@ import {
  */
 @Injectable()
 export class MongooseConfigService implements MongooseOptionsFactory {
-  /**
-   * Injects ConfigService for access to app configuration.
-   */
   @Inject(ConfigService) private readonly configService: ConfigService;
 
-  /**
-   * Initializes MongooseConfigService with a log message.
-   */
   constructor() {
     Logger.log('MongooseConfigService initialized', 'MongooseConfigService');
   }

@@ -13,8 +13,8 @@ import {
   ResetPasswordDto,
 } from './dto';
 import { JwtService } from '@nestjs/jwt';
-import { EmailService } from 'src/providers/email/email.service';
 import { UserService } from 'src/user/user.service';
+import { EmailService } from 'src/providers/email/email.service';
 
 @Injectable()
 export class AuthService {
@@ -83,7 +83,6 @@ export class AuthService {
     }
 
     const resetPasswordToken = user.createResetPasswordToken();
-    // console.log(resetPasswordToken);
 
     this.emailService.sendEmail(
       dto.email,
