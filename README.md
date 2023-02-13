@@ -26,6 +26,12 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Postman Collection
+
+```cp
+https://winter-comet-154069.postman.co/workspace/e6cbf17f-bc97-4449-8255-ce52aa2ca1f8/collection/23125475-e57101d8-0b08-46f5-9bff-73104a62cbf6?action=share&creator=23125475
+```
+
 ## Installation
 
 ```bash
