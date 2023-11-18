@@ -22,15 +22,75 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Project Description
+This project is a straightforward API designed to meet essential functionalities, including:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Authentication Module: Implements secure user authentication and authorization.
 
-## Postman Collection
+Users Module with Address Book: Manages user data and includes a convenient address book feature.
 
-```cp
-https://winter-comet-154069.postman.co/workspace/e6cbf17f-bc97-4449-8255-ce52aa2ca1f8/collection/23125475-e57101d8-0b08-46f5-9bff-73104a62cbf6?action=share&creator=23125475
+Postman Collection: A comprehensive Postman collection is provided, simplifying API testing and ensuring seamless integration.
+
+## Project Structure
+
+```plaintext
+src
+|-- app.controller.spec.ts
+|-- app.controller.ts
+|-- app.module.ts
+|-- app.service.ts
+|-- auth
+|   |-- auth.controller.ts
+|   |-- auth.module.ts
+|   |-- auth.service.spec.ts
+|   |-- auth.service.ts
+|   |-- dto
+|   |   |-- change-pwd-auth.dto.ts
+|   |   |-- forgot-pwd-auth.dto.ts
+|   |   |-- index.ts
+|   |   |-- login-auth.dto.ts
+|   |   `-- reset-pwd-auth.dto.ts
+|   `-- strategies
+|       |-- index.ts
+|       `-- jwt.strategy.ts
+|-- common
+|   |-- db
+|   |   `-- mongo.service.ts
+|   |-- decorators
+|   |   `-- roles.decorator.ts
+|   |-- envs
+|   |-- guards
+|   |   |-- index.ts
+|   |   |-- jwt.guard.ts
+|   |   `-- roles.guard.ts
+|   `-- types
+|       |-- index.ts
+|       |-- jwtPayload.ts
+|       `-- userModel.ts
+|-- main.ts
+|-- providers
+|   `-- email
+|       |-- email.module.ts
+|       |-- email.service.spec.ts
+|       `-- email.service.ts
+`-- user
+    |-- dto
+    |   |-- additional-user.dto.ts
+    |   |-- create-user.dto.ts
+    |   |-- index.ts
+    |   `-- update-user.dto.ts
+    |-- entities
+    |   `-- user.entity.ts
+    |-- user.controller.ts
+    |-- user.module.ts
+    |-- user.service.spec.ts
+    `-- user.service.ts
 ```
+
+# Postman Collection
+
+https://winter-comet-154069.postman.co/workspace/e6cbf17f-bc97-4449-8255-ce52aa2ca1f8/collection/23125475-e57101d8-0b08-46f5-9bff-73104a62cbf6?action=share&creator=23125475
+
 
 ## Installation
 
